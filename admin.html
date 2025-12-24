@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+
+    <!-- Auto refresh -->
+    <meta http-equiv="refresh" content="5">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(135deg, #654ea3, #eaafc8);
+            color: white;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            width: 200px;
+            text-align: center;
+            border-radius: 15px;
+            font-size: 20px;
+        }
+
+        table {
+            margin-top: 30px;
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        button {
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            color: white;
+        }
+
+        .accept { background: #4CAF50; }
+        .reject { background: #e74c3c; }
+        .call { background: #3498db; }
+
+        .logout {
+            background: #ff5b5b;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Admin Panel</h1>
+<h2>Now Serving: {{ current_token }}</h2>
+
+<div class="cards">
+    <div class="card">Pending: {{ pending }}</div>
+    <div class="card">Approved: {{ approved }}</div>
+    <div class="card">Rejected: {{ rejected }}</div>
+</div>
+
+<table border="1">
+    <tr>
+        <th>Token</th>
+        <th>Student</th>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+
+    {% for r in requests %}
+    <tr>
+        <td>{{ r[1] }}</td>
+        <td>{{ r[2] }}</td>
+        <td>{{ r[3] }}</td>
+        <td>{{ r[4] }}</td>
+        <td>
+            {% if r[5] == 'Pending' %}
+                <a href="/approve/{{ r[0] }}"><button class="accept">Approve</button></a>
+                <a href="/reject/{{ r[0] }}"><button class="reject">Reject</button></a>
+                <a href="/call_next/{{ r[0] }}"><button class="call">Call</button></a>
+            {% else %}
+                {{ r[5] }}
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div style="text-align:center;">
+    <button class="logout" onclick="window.location.href='/logout'">
+        Logout
+    </button>
+</div>
+
+</body>
+</html>

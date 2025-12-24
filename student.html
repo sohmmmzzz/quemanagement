@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(135deg, #654ea3, #eaafc8);
+            color: white;
+            padding: 30px;
+        }
+
+        h1, h3 {
+            text-align: center;
+        }
+
+        .form-box {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 12px;
+            width: 400px;
+            margin: auto;
+        }
+
+        select, input, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            background: #5a3ea8;
+            color: white;
+            font-weight: bold;
+        }
+
+        table {
+            margin-top: 40px;
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .logout {
+            margin-top: 20px;
+            background: #ff5b5b;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Student Dashboard</h1>
+<h3>Now Serving: {{ current_token }}</h3>
+
+<div class="form-box">
+    <h3>Book a Service</h3>
+
+    <form method="POST" action="/student">
+        <select name="purpose" required>
+            <option value="">Select Service</option>
+            <option>Bonafide Certificate</option>
+            <option>ID Card Reissue</option>
+            <option>Marksheet Request</option>
+            <option>Fee Payment</option>
+            <option>Attendance Certificate</option>
+        </select>
+
+        <input type="date" name="date" required>
+        <input type="time" name="time" required>
+
+        <button type="submit">Submit Booking</button>
+    </form>
+</div>
+
+<h2 style="text-align:center;">My Bookings</h2>
+
+<table border="1">
+    <tr>
+        <th>Token</th>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>QR</th>
+    </tr>
+
+    {% for row in bookings %}
+    <tr>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+        <td>
+            <img src="/static/qrcodes/{{ row[0] }}.png" width="60">
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div style="text-align:center;">
+    <button class="logout" onclick="window.location.href='/logout'">
+        Logout
+    </button>
+</div>
+
+</body>
+</html>
