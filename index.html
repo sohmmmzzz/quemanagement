@@ -1,80 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Queue-Free Booking System</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            color: white;
-            background: linear-gradient(135deg, #654ea3, #eaafc8);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .title-bar {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 12px 30px;
-            border-radius: 12px;
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-size: 60px;
-            margin: 10px 0;
-        }
-
-        p {
-            font-size: 22px;
-            margin-bottom: 40px;
-        }
-
-        .button-box {
-            display: flex;
-            gap: 30px;
-        }
-
-        button {
-            padding: 15px 35px;
-            font-size: 20px;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            color: white;
-        }
-
-        .student-btn {
-            background: #4126d8;
-        }
-
-        .admin-btn {
-            background: #c31432;
-        }
-    </style>
+  <title>Student Login</title>
 </head>
-
 <body>
 
-<div class="title-bar">Queue-Free Booking System</div>
+<h2>Student Login</h2>
 
-<h1>Welcome</h1>
-<p>Book appointments without standing in queues</p>
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
 
-<div class="button-box">
-    <button class="student-btn" onclick="window.location.href='/login'">
-        Student Login
-    </button>
-    <button class="admin-btn" onclick="window.location.href='/login'">
-        Admin Login
-    </button>
-</div>
+<p><a href="Forgot_Password.html">Forgot Password?</a></p>
+<p><a href="admin.html">Admin Login</a></p>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCwK39MvlU7jMnX85q1G96-w2ol7Tuw0_U",
+  authDomain: "que-management-cbbde.firebaseapp.com",
+  projectId: "que-management-cbbde",
+  storageBucket: "que-management-cbbde.firebasestorage.app",
+  messagingSenderId: "141715475978",
+  appId: "1:141715475978:web:477119aedeb17924b4d9f3"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = function () {
+  signInWithEmailAndPassword(auth, email.value, password.value)
+    .then(() => window.location.href = "student.html")
+    .catch(err => alert(err.message));
+};
+</script>
 
 </body>
 </html>
+
